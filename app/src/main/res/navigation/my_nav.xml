@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/my_nav">
+    android:id="@+id/my_nav"
+    app:startDestination="@id/homeFragment">
 
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.ecomarket.presentation.home.HomeFragment"
+        android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/basketFragment"
+        android:name="com.example.ecomarket.presentation.basket.BasketFragment"
+        android:label="BasketFragment" />
+    <fragment
+        android:id="@+id/informationFragment"
+        android:name="com.example.ecomarket.presentation.info.InformationFragment"
+        android:label="InformationFragment" />
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.example.ecomarket.presentation.history.HistoryFragment"
+        android:label="HistoryFragment" />
 </navigation>
