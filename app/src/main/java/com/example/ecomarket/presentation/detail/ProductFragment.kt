@@ -1,4 +1,4 @@
-package com.example.ecomarket.presentation.home
+package com.example.ecomarket.presentation.detail
 
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -7,71 +7,61 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.ecomarket.R
-import com.example.ecomarket.data.entity.CategoryListItem
+import com.example.ecomarket.data.entity.ProductListItem
 import com.example.ecomarket.data.entity.Resource
-import com.example.ecomarket.databinding.FragmentHomeBinding
+import com.example.ecomarket.databinding.FragmentProductBinding
 import com.example.ecomarket.utils.BaseFragment
 import com.example.ecomarket.utils.OffsetDecoration
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
+class ProductFragment : BaseFragment<FragmentProductBinding>(FragmentProductBinding::inflate) {
 
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: ProductViewModel by viewModels()
 
-    private val categoryAdapter = CategoryAdapter {
-        onCategoryItemClick()
-    }
+    private val productAdapter = ProductAdapter { item -> }
+
+    private val productListItem: List<ProductListItem>? = null
 
     override fun onBindView() {
         super.onBindView()
 
         setupRecyclerView()
-        fetchCategoryList()
-    }
+        getProductList()
+        setupBackBtn()
 
-    private fun onCategoryItemClick() {
-        findNavController().navigate(R.id.action_homeFragment_to_productFragment)
     }
 
     private fun setupRecyclerView() {
-        binding.categoryRv.apply {
+        binding.productRv.apply {
             layoutManager =
                 GridLayoutManager(
                     requireContext(),
                     2, GridLayoutManager.VERTICAL, false
                 )
-            adapter = categoryAdapter
+            adapter = productAdapter
             addItemDecoration(OffsetDecoration(start = 15, bottom = 10))
         }
     }
 
-    private fun fetchCategoryList() {
-        val bottomNavigationView =
-            requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav)
-
+    private fun getProductList() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.categoryList.collect { item ->
-                    when (item) {
+                viewModel.getProductList.collect { state ->
+                    when (state) {
                         is Resource.Loading -> {
                             binding.progressBar.visibility = View.VISIBLE
-                            bottomNavigationView.visibility = View.INVISIBLE
                         }
 
                         is Resource.Success -> {
-                            val categoryList = item.data ?: emptyList()
-                            categoryAdapter.setData(categoryList)
+                            val categoryList = state.data ?: emptyList()
+                            productAdapter.setData(categoryList)
                             binding.progressBar.visibility = View.INVISIBLE
-                            bottomNavigationView.visibility = View.VISIBLE
                         }
 
                         is Resource.Error -> {
                             binding.progressBar.visibility = View.GONE
-                            bottomNavigationView.visibility = View.INVISIBLE
                         }
 
                         else -> Unit
@@ -80,5 +70,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             }
         }
     }
-}
 
+    private fun setupBackBtn() {
+        binding.icArrowBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+}

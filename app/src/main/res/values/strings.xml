@@ -4,4 +4,14 @@
     <string name="basket">Корзина</string>
     <string name="history">История</string>
     <string name="information">Инфо</string>
+    <string name="products">Продукты</string>
+    <string name="add">Добавить</string>
+    <string name="hint_quick_search">Быстрый поиск</string>
+    <string name="all">Все</string>
+    <string name="fructs">Фрукты</string>
+    <string name="suhofructs">Сухофрукты</string>
+    <string name="Vegetables">Овощи</string>
+    <string name="tea_coffee">Чай и кофе</string>
+    <string name="Greens">Зелень</string>
+
 </resources>

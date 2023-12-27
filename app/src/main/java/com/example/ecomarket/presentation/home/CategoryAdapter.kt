@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.ListAdapter
 import com.example.ecomarket.data.entity.CategoryListItem
 import com.example.ecomarket.databinding.CategoryItemBinding
 
-class CategoryAdapter : ListAdapter<CategoryListItem, CategoryViewHolder>(DiffUtilCallBack()) {
+class CategoryAdapter(
+    private val onClick:(CategoryListItem) -> Unit
+): ListAdapter<CategoryListItem, CategoryViewHolder>(DiffUtilCallBack()) {
 
     fun setData(categoryList: List<CategoryListItem>) {
         submitList(categoryList)
@@ -20,6 +22,6 @@ class CategoryAdapter : ListAdapter<CategoryListItem, CategoryViewHolder>(DiffUt
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item,onClick)
     }
 }

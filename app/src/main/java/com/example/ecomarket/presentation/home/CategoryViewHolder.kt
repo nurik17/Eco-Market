@@ -9,7 +9,7 @@ import com.example.ecomarket.databinding.CategoryItemBinding
 class CategoryViewHolder(private val binding: CategoryItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: CategoryListItem){
+    fun bind(item: CategoryListItem,onClick:(CategoryListItem) -> Unit){
         binding.apply {
             categoryName.text = item.name
 
@@ -17,6 +17,9 @@ class CategoryViewHolder(private val binding: CategoryItemBinding) :
                 .load(item.image)
                 .error(R.drawable.ex_category)
                 .into(categoryImage)
+            root.setOnClickListener {
+                onClick.invoke(item)
+            }
         }
     }
 }
