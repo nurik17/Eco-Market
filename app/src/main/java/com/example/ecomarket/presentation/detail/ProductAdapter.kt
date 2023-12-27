@@ -11,9 +11,6 @@ class ProductAdapter(
     private val onClick:(ProductListItem) -> Unit
 ): ListAdapter<ProductListItem, ProductViewHolder>(ProductDiffUtilCallBack()) {
 
-    fun setData(productList: List<ProductListItem>) {
-        submitList(productList)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val inflater = LayoutInflater.from(parent.context)
