@@ -31,5 +31,16 @@
         <argument
             android:name="dataCategory"
             app:argType="com.example.ecomarket.data.entity.CategoryListItem" />
+        <action
+            android:id="@+id/action_productFragment_to_bottomProductFragment"
+            app:destination="@id/bottomProductFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/bottomProductFragment"
+        android:name="com.example.ecomarket.presentation.bottomProduct.BottomProductFragment"
+        android:label="BottomProductFragment" >
+        <argument
+            android:name="product"
+            app:argType="com.example.ecomarket.data.entity.ProductListItem" />
+    </dialog>
 </navigation>

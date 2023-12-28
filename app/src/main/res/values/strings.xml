@@ -14,5 +14,7 @@
     <string name="tea_coffee">Чай и кофе</string>
     <string name="Greens">Зелень</string>
     <string name="milkProduct">Молочные изделия</string>
+    <string name="placeAnOrder">Оформить заказ</string>
+    <string name="no_result">Ничего не нашли</string>
 
 </resources>
