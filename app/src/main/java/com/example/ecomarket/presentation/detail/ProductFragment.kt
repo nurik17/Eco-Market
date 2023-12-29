@@ -3,6 +3,7 @@ package com.example.ecomarket.presentation.detail
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -29,10 +30,11 @@ class ProductFragment :
     BaseFragment<FragmentProductBinding>(FragmentProductBinding::inflate) {
 
     private val viewModel: ProductViewModel by viewModels()
-    private val productAdapter = ProductAdapter { clickableView, item ->
-        onClick(clickableView, item)
+    private val productAdapter = ProductAdapter { clikcableView, item ->
+        onClick(clikcableView, item)
     }
     private var selectedChip: Chip? = null
+    private lateinit var chipList: List<Chip>
 
     override fun onBindView() {
         super.onBindView()
@@ -43,15 +45,16 @@ class ProductFragment :
         setupBackBtn()
     }
 
-    private fun onClick(clickableView: ClickableView, item: ProductListItem) {
+    private fun onClick(clickableView: ProductViewHolder.ClickableView, item: ProductListItem) {
         when (clickableView) {
-            ClickableView.ONCLICK -> navigationToBottomSheet(item)
-            ClickableView.ONADDCLICK -> basketFunction(item)
+            ProductViewHolder.ClickableView.ONCLICK -> navigationToBottomSheet(item)
+            ProductViewHolder.ClickableView.ONADDCLICK -> viewModel.incrementProductQuantity(item)
+            ProductViewHolder.ClickableView.ONMINUSCLICK -> { viewModel.decrementProductQuantity(item) }
+            ProductViewHolder.ClickableView.ONPLUSCLICK -> { viewModel.incrementProductQuantity(item) }
         }
     }
 
     private fun basketFunction(item: ProductListItem) {
-        viewModel.addProductToBasket(item)
         snackBarToAddedProducts(item)
     }
 
@@ -69,22 +72,12 @@ class ProductFragment :
     }
 
     private fun setupViews() = with(binding) {
-        val chipList = listOf(chip1, chip2, chip3, chip4, chip5, chip6, chip7)
-
+        chipList = listOf(chip1, chip2, chip3, chip4, chip5, chip6, chip7)
         val chipClickListener: (Chip) -> Unit = { clickedChip ->
             productRv.adapter = productAdapter
-            if (clickedChip == chip1) {
-                productAdapter.submitList(viewModel.getProductList.value.data ?: emptyList())
-                performSearchInCategory() // No chip selected, display all products
-            } else {
-                val selectedCategory = chipList.indexOf(clickedChip) + 1
-                val productList = productListByCategory(selectedCategory)
-                productAdapter.submitList(productList)
-                performSearchInCategory(selectedCategory)
-            }
+            selectCategory(clickedChip)
             updateCheckedChip(clickedChip)
         }
-
         chipList.forEach { chip ->
             chip.setSafeOnClickListener {
                 chipClickListener.invoke(chip)
@@ -92,8 +85,21 @@ class ProductFragment :
         }
     }
 
+    private fun selectCategory(selectedChip: Chip){
+        if (selectedChip == binding.chip1) {
+            productAdapter.submitList(viewModel.getAllBasketProducts?.value ?: emptyList())
+            performSearchInCategory()
+        } else {
+            val selectedCategory = chipList.indexOf(selectedChip) + 1
+            val productList = productListByCategory(selectedCategory)
+            productAdapter.submitList(productList)
+            performSearchInCategory(selectedCategory)
+        }
+    }
+
+
     private fun productListByCategory(category: Int) =
-        viewModel.getProductList.value.data?.filter { it.category == category } ?: emptyList()
+        viewModel.getAllBasketProducts?.value?.filter { it.category == category } ?: emptyList()
 
     private fun updateCheckedChip(clickedChip: Chip) {
         selectedChip?.isChecked = false
@@ -119,7 +125,10 @@ class ProductFragment :
                             binding.blockChips.visibility = View.GONE
                         }
                         is Resource.Success -> {
-                            productAdapter.submitList(state.data ?: emptyList())
+                            viewModel.getAllBasketProducts?.observe(viewLifecycleOwner){items->
+                                selectedChip?.let { selectCategory(it) }
+                            }
+                            viewModel.addProductsToBasket(state.data ?: emptyList())
                             binding.progressBar.visibility = View.INVISIBLE
                             binding.addBtnBasket.visibility = View.VISIBLE
                             binding.blockSearch.visibility = View.VISIBLE
@@ -149,12 +158,12 @@ class ProductFragment :
                 } else {
                     viewModel.getProductList.value.data ?: emptyList()
                 }
-                val filteredList = productList.filter { product ->
+                val filteredList = productList?.filter { product ->
                     product.title.lowercase(Locale.getDefault())
                         .contains(query?.toString()?.lowercase(Locale.getDefault()) ?: "")
                 }
                 productAdapter.submitList(filteredList)
-                if (filteredList.isEmpty()) {
+                if (filteredList?.isEmpty() == true) {
                     showEmptyView()
                 } else {
                     hideEmptyView()

@@ -14,6 +14,6 @@ data class ProductListItem(
     val description: String,
     val image: String,
     val price: String,
-    val quantity: Int,
+    val quantity: Int = 0,
     val title: String
 ): Parcelable

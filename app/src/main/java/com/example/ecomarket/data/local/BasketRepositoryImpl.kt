@@ -9,6 +9,10 @@ class BasketRepositoryImpl(private val basketProductDao: BasketProductDao) : Bas
         basketProductDao.addProduct(product)
     }
 
+    override suspend fun addProducts(products: List<ProductListItem>) {
+        basketProductDao.addProducts(products)
+    }
+
     override fun getAllBasketProduct() = basketProductDao.getAllBasketProducts()
 
     override suspend fun deleteProduct(productId: Int) {

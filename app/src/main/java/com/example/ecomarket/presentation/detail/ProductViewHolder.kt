@@ -1,6 +1,7 @@
 package com.example.ecomarket.presentation.detail
 
 import android.annotation.SuppressLint
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.ecomarket.R
@@ -13,7 +14,7 @@ class ProductViewHolder(private val binding: ProductItemBinding) :
     @SuppressLint("SetTextI18n")
     fun bind(
         item: ProductListItem,
-        onClick: (clickableView: ClickableView,item: ProductListItem) -> Unit
+        onClick: (clickableView: ClickableView, item: ProductListItem) -> Unit
     ) {
         binding.apply {
             productName.text = item.title
@@ -24,18 +25,62 @@ class ProductViewHolder(private val binding: ProductItemBinding) :
                 .error(R.drawable.ex_category)
                 .into(productImage)
 
-            binding.productAddBtn.setOnClickListener {
+
+
+            if (item.quantity > 1) {
+                showQuantityAndButtons(item)
+            } else {
+                hideQuantityAndButtons(onClick,item)
+            }
+
+            productAddBtn.setOnClickListener {
                 onClick(ClickableView.ONADDCLICK, item)
-                binding.productAddBtn.isSelected != binding.productAddBtn.isSelected
+                productAddBtn.isSelected != productAddBtn.isSelected
+            }
+            icMinus.setOnClickListener {
+                onClick(ClickableView.ONMINUSCLICK, item)
+            }
+            icPlus.setOnClickListener {
+                onClick(ClickableView.ONPLUSCLICK, item)
             }
             root.setOnClickListener {
-                onClick.invoke(ClickableView.ONCLICK,item)
+                onClick.invoke(ClickableView.ONCLICK, item)
             }
         }
     }
-}
 
-enum class ClickableView {
-    ONCLICK,
-    ONADDCLICK
+    private fun hideQuantityAndButtons(
+        onClick: (clickableView: ClickableView, item: ProductListItem) -> Unit,
+        item: ProductListItem
+    ) {
+        binding.apply {
+            quantityProduct.visibility = View.GONE
+            icMinus.visibility = View.GONE
+            icPlus.visibility = View.GONE
+
+            productAddBtn.visibility = View.VISIBLE
+            productAddBtn.setOnClickListener {
+                onClick(ClickableView.ONADDCLICK, item)
+            }
+        }
+    }
+
+    private fun showQuantityAndButtons(item: ProductListItem) {
+        binding.apply {
+            quantityProduct.visibility = View.VISIBLE
+            icMinus.visibility = View.VISIBLE
+            icPlus.visibility = View.VISIBLE
+
+            quantityProduct.text = item.quantity.toString()
+
+            productAddBtn.visibility = View.GONE
+        }
+    }
+
+    enum class ClickableView {
+        ONCLICK,
+        ONADDCLICK,
+        ONMINUSCLICK,
+        ONPLUSCLICK
+    }
 }

@@ -13,6 +13,9 @@ interface BasketProductDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addProduct(product: ProductListItem)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addProducts(products: List<ProductListItem>)
+
     @Query("SELECT * FROM basket_product")
     fun getAllBasketProducts(): LiveData<List<ProductListItem>>
 
@@ -28,3 +31,6 @@ interface BasketProductDao {
     @Query("UPDATE basket_product SET quantity = quantity - 1 WHERE id = :productId AND quantity > 0")
     suspend fun decrementProductQuantity(productId: Int)
 }
+/*
+@Query("UPDATE product SET product_count = product_count + 1 WHERE product GLOB :product")
+suspend fun updateProductCount(product: String)*/

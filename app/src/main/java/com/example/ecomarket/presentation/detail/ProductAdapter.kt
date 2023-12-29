@@ -7,7 +7,7 @@ import com.example.ecomarket.data.entity.ProductListItem
 import com.example.ecomarket.databinding.ProductItemBinding
 
 class ProductAdapter(
-    private val onClick:(clickableView: ClickableView,item: ProductListItem) -> Unit,
+    private val onClick:(clickableView: ProductViewHolder.ClickableView, item: ProductListItem) -> Unit,
 ): ListAdapter<ProductListItem, ProductViewHolder>(ProductDiffUtilCallBack()) {
 
 

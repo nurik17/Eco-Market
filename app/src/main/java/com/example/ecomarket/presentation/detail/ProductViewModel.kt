@@ -1,6 +1,7 @@
 package com.example.ecomarket.presentation.detail
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ecomarket.data.entity.ProductListItem
@@ -25,9 +26,17 @@ class ProductViewModel @Inject constructor(
         MutableStateFlow<Resource<List<ProductListItem>>>(Resource.UnSpecified())
     val getProductList = _getProductList.asStateFlow()
 
+    private var _getAllBasketProducts: LiveData<List<ProductListItem>>? = basketRepo.getAllBasketProduct()
+    val getAllBasketProducts = _getAllBasketProducts
+
     init {
         getProductList()
     }
+
+    fun getAllBasketProducts(){
+        _getAllBasketProducts = basketRepo.getAllBasketProduct()
+    }
+
 
     private fun getProductList() {
         viewModelScope.launch {
@@ -43,23 +52,28 @@ class ProductViewModel @Inject constructor(
             }
         }
     }
-
     fun addProductToBasket(product: ProductListItem) {
         viewModelScope.launch {
-            try {
-                withContext(Dispatchers.IO) {
-                    val existingProduct = basketRepo.getBasketProductById(
-                        productId = product.id
-                    )
-                    if (existingProduct != null) {
-                        basketRepo.incrementProductQuantity(productId = product.id)
-                    } else {
-                        basketRepo.addProduct(product)
-                    }
-                }
-            } catch (e: Exception) {
-                Log.e("ProductViewModel", e.message.toString())
-            }
+            basketRepo.addProduct(product)
+        }
+    }
+
+    fun addProductsToBasket(products: List<ProductListItem>) {
+        viewModelScope.launch {
+            basketRepo.addProducts(products)
+        }
+    }
+
+    fun incrementProductQuantity(product: ProductListItem) {
+        viewModelScope.launch {
+            basketRepo.incrementProductQuantity(product.id)
+            Log.d("ProductViewModel", "incrementProductQuantity: ${product.quantity}")
+        }
+    }
+
+    fun decrementProductQuantity(product: ProductListItem) {
+        viewModelScope.launch {
+            basketRepo.decrementProductQuantity(product.id)
         }
     }
 }
