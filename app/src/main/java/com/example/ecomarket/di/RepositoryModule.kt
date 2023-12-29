@@ -1,7 +1,10 @@
 package com.example.ecomarket.di
 
+import com.example.ecomarket.data.local.BasketProductDao
+import com.example.ecomarket.data.local.BasketRepositoryImpl
 import com.example.ecomarket.data.remote.ProductApi
 import com.example.ecomarket.data.remote.ProductRepositoryImpl
+import com.example.ecomarket.domain.BasketRepository
 import com.example.ecomarket.domain.ProductRepository
 import dagger.Module
 import dagger.Provides
@@ -17,4 +20,9 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideProductRepository(api: ProductApi): ProductRepository = ProductRepositoryImpl(api)
+
+    @Provides
+    @Singleton
+    fun provideBasketProductRepository(basketProductDao: BasketProductDao): BasketRepository =
+        BasketRepositoryImpl(basketProductDao)
 }

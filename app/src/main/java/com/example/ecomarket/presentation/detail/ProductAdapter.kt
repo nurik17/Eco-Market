@@ -5,10 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.example.ecomarket.data.entity.ProductListItem
 import com.example.ecomarket.databinding.ProductItemBinding
-import com.example.ecomarket.presentation.home.DiffUtilCallBack
 
 class ProductAdapter(
-    private val onClick:(ProductListItem) -> Unit
+    private val onClick:(clickableView: ClickableView,item: ProductListItem) -> Unit,
 ): ListAdapter<ProductListItem, ProductViewHolder>(ProductDiffUtilCallBack()) {
 
 

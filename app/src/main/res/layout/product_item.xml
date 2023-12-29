@@ -47,13 +47,14 @@
             android:id="@+id/product_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/product_name"
             android:layout_marginTop="40dp"
-            tools:text = "56 тг"
             android:fontFamily="@font/tt_norms_pro_700"
+            android:textColor="@color/main_green"
             android:textSize="20sp"
-            android:textColor="@color/main_green"/>
-        
+            app:layout_constraintTop_toBottomOf="@id/product_name"
+            tools:layout_editor_absoluteX="0dp"
+            tools:text="56 тг" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/product_add_btn"
             android:layout_width="match_parent"

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -18,10 +19,9 @@ import com.example.ecomarket.utils.BaseFragment
 import com.example.ecomarket.utils.OffsetDecoration
 import com.example.ecomarket.utils.setSafeOnClickListener
 import com.google.android.material.chip.Chip
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
-import retrofit2.http.Query
 import java.util.Locale
 
 @AndroidEntryPoint
@@ -29,10 +29,9 @@ class ProductFragment :
     BaseFragment<FragmentProductBinding>(FragmentProductBinding::inflate) {
 
     private val viewModel: ProductViewModel by viewModels()
-    private val productAdapter = ProductAdapter { item ->
-        navigationToBottomSheet(item)
+    private val productAdapter = ProductAdapter { clickableView, item ->
+        onClick(clickableView, item)
     }
-
     private var selectedChip: Chip? = null
 
     override fun onBindView() {
@@ -42,6 +41,25 @@ class ProductFragment :
         setupRecyclerView()
         getProductList()
         setupBackBtn()
+    }
+
+    private fun onClick(clickableView: ClickableView, item: ProductListItem) {
+        when (clickableView) {
+            ClickableView.ONCLICK -> navigationToBottomSheet(item)
+            ClickableView.ONADDCLICK -> basketFunction(item)
+        }
+    }
+
+    private fun basketFunction(item: ProductListItem) {
+        viewModel.addProductToBasket(item)
+        snackBarToAddedProducts(item)
+    }
+
+    private fun snackBarToAddedProducts(item: ProductListItem) {
+        val snackbar =
+            Snackbar.make(requireView(), item.title + " is added to basket", Snackbar.LENGTH_LONG)
+        snackbar.setBackgroundTint(ContextCompat.getColor(requireContext(),R.color.main_green))
+        snackbar.show()
     }
 
     private fun navigationToBottomSheet(item: ProductListItem) {
@@ -55,7 +73,6 @@ class ProductFragment :
 
         val chipClickListener: (Chip) -> Unit = { clickedChip ->
             productRv.adapter = productAdapter
-
             if (clickedChip == chip1) {
                 productAdapter.submitList(viewModel.getProductList.value.data ?: emptyList())
                 performSearchInCategory() // No chip selected, display all products
@@ -65,10 +82,8 @@ class ProductFragment :
                 productAdapter.submitList(productList)
                 performSearchInCategory(selectedCategory)
             }
-
             updateCheckedChip(clickedChip)
         }
-
 
         chipList.forEach { chip ->
             chip.setSafeOnClickListener {
@@ -103,7 +118,6 @@ class ProductFragment :
                             binding.blockSearch.visibility = View.GONE
                             binding.blockChips.visibility = View.GONE
                         }
-
                         is Resource.Success -> {
                             productAdapter.submitList(state.data ?: emptyList())
                             binding.progressBar.visibility = View.INVISIBLE
@@ -112,14 +126,12 @@ class ProductFragment :
                             binding.blockChips.visibility = View.VISIBLE
 
                         }
-
                         is Resource.Error -> {
                             binding.progressBar.visibility = View.GONE
                             binding.addBtnBasket.visibility = View.INVISIBLE
                             binding.blockSearch.visibility = View.INVISIBLE
                             binding.blockChips.visibility = View.INVISIBLE
                         }
-
                         else -> Unit
                     }
                 }
@@ -137,21 +149,17 @@ class ProductFragment :
                 } else {
                     viewModel.getProductList.value.data ?: emptyList()
                 }
-
                 val filteredList = productList.filter { product ->
                     product.title.lowercase(Locale.getDefault())
                         .contains(query?.toString()?.lowercase(Locale.getDefault()) ?: "")
                 }
-
                 productAdapter.submitList(filteredList)
-
                 if (filteredList.isEmpty()) {
                     showEmptyView()
                 } else {
                     hideEmptyView()
                 }
             }
-
             override fun afterTextChanged(p0: Editable?) {}
         })
     }
