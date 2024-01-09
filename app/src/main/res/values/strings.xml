@@ -19,5 +19,13 @@
     <string name="clear">Очистить</string>
     <string name="you_dont_have_order">У вас нет заказа</string>
     <string name="navogate_to_shop">Перейти в магазин</string>
+    <string name="info_page_main_text">Фрукты, овощи, зелень, сухофрукты а так же сделанные из натуральных ЭКО продуктов (варенье, салаты, соления, компоты и т.д.) можете заказать удобно, качественно и по доступной цене.Готовы сотрудничать взаимовыгодно с магазинами.Наши цены как на рынке.Мы заинтересованы в экономии ваших денег и времени.Стоимость доставки 150 сом и ещё добавлен для окраину города.При отказе подтвержденного заказа более 2-х раз Клиент заносится в чёрный список!!"</string>
+    <string name="to_call">Позвонить</string>
+    <string name="whatsapp">WhatsApp</string>
+    <string name="instagram">Instagram</string>
+    <string name="phone_number">tel:+77776821251</string>
+    <string name="phone_number_whatsapp">+77716821251</string>
+    <string name="whatsapp_message">Привет это магазин Эко-Маркет.</string>
+    <string name="instagram_profile_name">madlen_kk</string>
 
 </resources>
