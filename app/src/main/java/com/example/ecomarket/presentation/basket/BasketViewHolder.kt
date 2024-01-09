@@ -15,14 +15,12 @@ class BasketViewHolder(private val binding: BasketItemBinding) :
 
         binding.apply {
             basketProductName.text = item.title
-            basketProductPrice.text = ("Цена "+item.price +"тг"+"за шт")
-
+            basketProductPrice.text = ("Цена "+item.price+" тг"+" за шт")
 
             Glide.with(basketProductImage)
                 .load(item.image)
                 .error(R.drawable.ex_basket_item)
                 .into(basketProductImage)
-
         }
     }
 }

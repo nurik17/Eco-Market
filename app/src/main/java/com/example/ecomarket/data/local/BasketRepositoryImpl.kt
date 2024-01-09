@@ -1,5 +1,6 @@
 package com.example.ecomarket.data.local
 
+import androidx.lifecycle.LiveData
 import com.example.ecomarket.data.entity.ProductListItem
 import com.example.ecomarket.domain.BasketRepository
 
@@ -30,4 +31,8 @@ class BasketRepositoryImpl(private val basketProductDao: BasketProductDao) : Bas
     override suspend fun decrementProductQuantity(productId: Int) {
         basketProductDao.decrementProductQuantity(productId)
     }
+
+    override fun basketItemGreaterThanZero() =
+        basketProductDao.getBasketProductListItemGreaterThanZero()
+
 }

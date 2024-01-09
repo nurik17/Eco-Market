@@ -10,10 +10,10 @@ import com.example.ecomarket.data.entity.ProductListItem
 @Dao
 interface BasketProductDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addProduct(product: ProductListItem)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addProducts(products: List<ProductListItem>)
 
     @Query("SELECT * FROM basket_product")
@@ -28,9 +28,10 @@ interface BasketProductDao {
     @Query("UPDATE basket_product SET quantity = quantity + 1 WHERE id = :productId")
     suspend fun incrementProductQuantity(productId: Int)
 
-    @Query("UPDATE basket_product SET quantity = quantity - 1 WHERE id = :productId AND quantity > 0")
+    @Query("UPDATE basket_product SET quantity = quantity - 1 WHERE id = :productId AND quantity > 1")
     suspend fun decrementProductQuantity(productId: Int)
+
+    @Query("SELECT * from basket_product Where quantity > 1")
+    fun getBasketProductListItemGreaterThanZero(): LiveData<List<ProductListItem>>
 }
-/*
-@Query("UPDATE product SET product_count = product_count + 1 WHERE product GLOB :product")
-suspend fun updateProductCount(product: String)*/
+

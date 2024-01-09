@@ -33,11 +33,6 @@ class ProductViewModel @Inject constructor(
         getProductList()
     }
 
-    fun getAllBasketProducts(){
-        _getAllBasketProducts = basketRepo.getAllBasketProduct()
-    }
-
-
     private fun getProductList() {
         viewModelScope.launch {
             try {
@@ -52,12 +47,6 @@ class ProductViewModel @Inject constructor(
             }
         }
     }
-    fun addProductToBasket(product: ProductListItem) {
-        viewModelScope.launch {
-            basketRepo.addProduct(product)
-        }
-    }
-
     fun addProductsToBasket(products: List<ProductListItem>) {
         viewModelScope.launch {
             basketRepo.addProducts(products)

@@ -12,4 +12,6 @@ interface BasketRepository {
     suspend fun getBasketProductById(productId: Int): ProductListItem?
     suspend fun incrementProductQuantity(productId: Int)
     suspend fun decrementProductQuantity(productId: Int)
+
+    fun basketItemGreaterThanZero(): LiveData<List<ProductListItem>>
 }

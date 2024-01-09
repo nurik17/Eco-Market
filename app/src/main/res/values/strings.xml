@@ -17,5 +17,7 @@
     <string name="placeAnOrder">Оформить заказ</string>
     <string name="no_result">Ничего не нашли</string>
     <string name="clear">Очистить</string>
+    <string name="you_dont_have_order">У вас нет заказа</string>
+    <string name="navogate_to_shop">Перейти в магазин</string>
 
 </resources>

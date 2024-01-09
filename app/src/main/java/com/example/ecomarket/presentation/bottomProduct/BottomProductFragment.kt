@@ -43,5 +43,9 @@ class BottomProductFragment : BottomSheetDialogFragment() {
             .load(productInfo.image)
             .error(R.drawable.ex_category)
             .into(binding.imageProduct)
+
+        if(productInfo.quantity > 1){
+            binding
+        }
     }
 }

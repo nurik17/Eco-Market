@@ -7,7 +7,7 @@ import com.example.ecomarket.data.entity.ProductListItem
 import com.example.ecomarket.databinding.BasketItemBinding
 import com.example.ecomarket.presentation.detail.ProductDiffUtilCallBack
 
-class BasketAdapter(): ListAdapter<ProductListItem, BasketViewHolder>(ProductDiffUtilCallBack()) {
+class BasketAdapter: ListAdapter<ProductListItem, BasketViewHolder>(ProductDiffUtilCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BasketViewHolder {
         val inflater = LayoutInflater.from(parent.context)

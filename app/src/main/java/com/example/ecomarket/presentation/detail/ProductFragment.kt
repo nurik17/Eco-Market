@@ -3,7 +3,6 @@ package com.example.ecomarket.presentation.detail
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -43,25 +42,28 @@ class ProductFragment :
         setupRecyclerView()
         getProductList()
         setupBackBtn()
+
+        chipList.firstOrNull()?.let { selectCategory(it) }
     }
 
     private fun onClick(clickableView: ProductViewHolder.ClickableView, item: ProductListItem) {
         when (clickableView) {
             ProductViewHolder.ClickableView.ONCLICK -> navigationToBottomSheet(item)
-            ProductViewHolder.ClickableView.ONADDCLICK -> viewModel.incrementProductQuantity(item)
-            ProductViewHolder.ClickableView.ONMINUSCLICK -> { viewModel.decrementProductQuantity(item) }
-            ProductViewHolder.ClickableView.ONPLUSCLICK -> { viewModel.incrementProductQuantity(item) }
+            ProductViewHolder.ClickableView.ONADDCLICK -> snackBarToAddedProducts(item)
+            ProductViewHolder.ClickableView.ONMINUSCLICK -> {
+                viewModel.decrementProductQuantity(item)
+            }
+            ProductViewHolder.ClickableView.ONPLUSCLICK -> {
+                viewModel.incrementProductQuantity(item)
+            }
         }
     }
 
-    private fun basketFunction(item: ProductListItem) {
-        snackBarToAddedProducts(item)
-    }
-
     private fun snackBarToAddedProducts(item: ProductListItem) {
+        viewModel.incrementProductQuantity(item)
         val snackbar =
-            Snackbar.make(requireView(), item.title + " is added to basket", Snackbar.LENGTH_LONG)
-        snackbar.setBackgroundTint(ContextCompat.getColor(requireContext(),R.color.main_green))
+            Snackbar.make(requireView(), item.title + " is added to basket", Snackbar.LENGTH_SHORT)
+        snackbar.setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.main_green))
         snackbar.show()
     }
 
@@ -85,19 +87,26 @@ class ProductFragment :
         }
     }
 
-    private fun selectCategory(selectedChip: Chip){
-        if (selectedChip == binding.chip1) {
+    private fun selectCategory(selectedChip: Chip?) {
+        if (selectedChip == null) {
             productAdapter.submitList(viewModel.getAllBasketProducts?.value ?: emptyList())
             performSearchInCategory()
         } else {
-            val selectedCategory = chipList.indexOf(selectedChip) + 1
-            val productList = productListByCategory(selectedCategory)
-            productAdapter.submitList(productList)
-            performSearchInCategory(selectedCategory)
+            if (selectedChip == binding.chip1) {
+                productAdapter.submitList(viewModel.getAllBasketProducts?.value ?: emptyList())
+                performSearchInCategory()
+            } else {
+                val selectedCategory = chipList.indexOf(selectedChip) + 1
+                val productList = productListByCategory(selectedCategory)
+                productAdapter.submitList(productList)
+                performSearchInCategory(selectedCategory)
+
+                if(productList.isEmpty()) showEmptyView()
+                else hideEmptyView()
+            }
+            updateCheckedChip(selectedChip)
         }
     }
-
-
     private fun productListByCategory(category: Int) =
         viewModel.getAllBasketProducts?.value?.filter { it.category == category } ?: emptyList()
 
@@ -123,10 +132,16 @@ class ProductFragment :
                             binding.addBtnBasket.visibility = View.GONE
                             binding.blockSearch.visibility = View.GONE
                             binding.blockChips.visibility = View.GONE
+                            binding.noResultTv.visibility = View.GONE
+                            binding.noResultImage.visibility = View.GONE
                         }
+
                         is Resource.Success -> {
-                            viewModel.getAllBasketProducts?.observe(viewLifecycleOwner){items->
+                            viewModel.getAllBasketProducts?.observe(viewLifecycleOwner) { items ->
                                 selectedChip?.let { selectCategory(it) }
+
+                                if(items.isEmpty()) showEmptyView()
+                                else hideEmptyView()
                             }
                             viewModel.addProductsToBasket(state.data ?: emptyList())
                             binding.progressBar.visibility = View.INVISIBLE
@@ -135,12 +150,14 @@ class ProductFragment :
                             binding.blockChips.visibility = View.VISIBLE
 
                         }
+
                         is Resource.Error -> {
                             binding.progressBar.visibility = View.GONE
                             binding.addBtnBasket.visibility = View.INVISIBLE
                             binding.blockSearch.visibility = View.INVISIBLE
                             binding.blockChips.visibility = View.INVISIBLE
                         }
+
                         else -> Unit
                     }
                 }
@@ -158,17 +175,13 @@ class ProductFragment :
                 } else {
                     viewModel.getProductList.value.data ?: emptyList()
                 }
-                val filteredList = productList?.filter { product ->
+                val filteredList = productList.filter { product ->
                     product.title.lowercase(Locale.getDefault())
                         .contains(query?.toString()?.lowercase(Locale.getDefault()) ?: "")
                 }
                 productAdapter.submitList(filteredList)
-                if (filteredList?.isEmpty() == true) {
-                    showEmptyView()
-                } else {
-                    hideEmptyView()
-                }
             }
+
             override fun afterTextChanged(p0: Editable?) {}
         })
     }
@@ -176,13 +189,11 @@ class ProductFragment :
     private fun showEmptyView() {
         binding.noResultImage.visibility = View.VISIBLE
         binding.noResultTv.visibility = View.VISIBLE
-        binding.addBtnBasket.visibility = View.INVISIBLE
     }
 
     private fun hideEmptyView() {
-        binding.noResultImage.visibility = View.INVISIBLE
-        binding.noResultTv.visibility = View.INVISIBLE
-        binding.addBtnBasket.visibility = View.VISIBLE
+        binding.noResultImage.visibility = View.GONE
+        binding.noResultTv.visibility = View.GONE
     }
 
 
@@ -192,6 +203,3 @@ class ProductFragment :
         }
     }
 }
-
-
-

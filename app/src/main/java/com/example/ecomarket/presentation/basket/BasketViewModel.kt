@@ -22,4 +22,6 @@ class BasketViewModel @Inject constructor(
 
     fun getAllBasketProducts() = repository.getAllBasketProduct()
 
+    fun getAllBasketItems() = repository.basketItemGreaterThanZero()
+
 }
