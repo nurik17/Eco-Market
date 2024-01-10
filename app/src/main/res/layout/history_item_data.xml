@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tolls="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/light_grey"
+    app:cardCornerRadius="16dp"
+    app:cardMaxElevation="4dp"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp">
+
+        <ImageView
+            android:id="@+id/image_basket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_basket_data_item"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_basket"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/order_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/tt_norms_pro_500"
+            android:textColor="@color/dark_black"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/image_basket"
+            app:layout_constraintTop_toTopOf="parent"
+            tolls:text="Заказа №345674" />
+
+        <TextView
+            android:id="@+id/order_id_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/tt_norms_pro_400"
+            android:textColor="@color/durk_grey"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/image_basket"
+            app:layout_constraintTop_toBottomOf="@id/order_id"
+            tolls:text="12:46" />
+
+        <TextView
+            android:id="@+id/order_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/tt_norms_pro_700"
+            android:textColor="@color/main_green"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/order_id"
+            app:layout_constraintTop_toTopOf="parent"
+            tolls:text="340 тг" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

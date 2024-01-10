@@ -15,6 +15,7 @@ class CategoryViewHolder(private val binding: CategoryItemBinding) :
 
             Glide.with(categoryImage)
                 .load(item.image)
+                .placeholder(R.drawable.progress_animation)
                 .error(R.drawable.ex_category)
                 .into(categoryImage)
             root.setOnClickListener {

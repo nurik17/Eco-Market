@@ -3,6 +3,8 @@ package com.example.ecomarket.di
 import com.example.ecomarket.domain.CategoryListUseCase
 import com.example.ecomarket.domain.CategoryListUseCaseInteraction
 import com.example.ecomarket.domain.GetProductListUseCase
+import com.example.ecomarket.domain.OrderedListItemInteraction
+import com.example.ecomarket.domain.OrderedListItemsUseCase
 import com.example.ecomarket.domain.ProductListUseCaseInteraction
 import com.example.ecomarket.domain.ProductRepository
 import dagger.Module
@@ -21,4 +23,8 @@ object UseCaseModule {
     @Provides
     fun provideProductListUseCase(repo: ProductRepository): GetProductListUseCase =
         ProductListUseCaseInteraction(repo)
+
+    @Provides
+    fun provideOrderHistoryListUseCase(repo: ProductRepository): OrderedListItemsUseCase =
+        OrderedListItemInteraction(repo)
 }
