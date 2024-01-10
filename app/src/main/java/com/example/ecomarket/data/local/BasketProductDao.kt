@@ -22,6 +22,9 @@ interface BasketProductDao {
     @Query("DELETE FROM basket_product WHERE id = :productId")
     suspend fun deleteProduct(productId: Int)
 
+    @Query("DELETE FROM basket_product")
+    suspend fun deleteAllProducts()
+
     @Query("SELECT * FROM basket_product WHERE id = :productId")
     suspend fun getBasketProductById(productId: Int): ProductListItem?
 

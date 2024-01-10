@@ -28,5 +28,9 @@
     <string name="whatsapp_message">Привет это магазин Эко-Маркет.</string>
     <string name="instagram_profile_name">madlen_kk</string>
     <string name="title_history_order_page">История заказов</string>
+    <string name="sum">Сумма</string>
+    <string name="make_order_btn">Оформить заказ</string>
+    <string name="deliver">Доставка</string>
+    <string name="overall">Итого</string>
 
 </resources>

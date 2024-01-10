@@ -53,6 +53,7 @@ class ProductFragment :
             ProductViewHolder.ClickableView.ONMINUSCLICK -> {
                 viewModel.decrementProductQuantity(item)
             }
+
             ProductViewHolder.ClickableView.ONPLUSCLICK -> {
                 viewModel.incrementProductQuantity(item)
             }
@@ -101,12 +102,13 @@ class ProductFragment :
                 productAdapter.submitList(productList)
                 performSearchInCategory(selectedCategory)
 
-                if(productList.isEmpty()) showEmptyView()
+                if (productList.isEmpty()) showEmptyView()
                 else hideEmptyView()
             }
             updateCheckedChip(selectedChip)
         }
     }
+
     private fun productListByCategory(category: Int) =
         viewModel.getAllBasketProducts?.value?.filter { it.category == category } ?: emptyList()
 
@@ -140,7 +142,7 @@ class ProductFragment :
                             viewModel.getAllBasketProducts?.observe(viewLifecycleOwner) { items ->
                                 selectedChip?.let { selectCategory(it) }
 
-                                if(items.isEmpty()) showEmptyView()
+                                if (items.isEmpty()) showEmptyView()
                                 else hideEmptyView()
                             }
                             viewModel.addProductsToBasket(state.data ?: emptyList())

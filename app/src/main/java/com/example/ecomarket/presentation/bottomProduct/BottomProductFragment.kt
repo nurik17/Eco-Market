@@ -35,17 +35,19 @@ class BottomProductFragment : BottomSheetDialogFragment() {
             Build.VERSION.SDK_INT >= 33 -> arguments?.getParcelable("product")!!
             else -> @Suppress("DEPRECATION") (arguments?.getParcelable("product")!!)
         }
+        getInfoAboutProduct(productInfo)
+    }
 
-        binding.productName.text = productInfo.title
-        binding.productPrice.text = productInfo.price + " тг шт"
-        binding.productDescription.text = productInfo.description
-        Glide.with(binding.imageProduct)
-            .load(productInfo.image)
-            .error(R.drawable.ex_category)
-            .into(binding.imageProduct)
-
-        if(productInfo.quantity > 1){
-            binding
+    @SuppressLint("SetTextI18n")
+    private fun getInfoAboutProduct(productInfo: ProductListItem){
+        binding.apply {
+            productName.text = productInfo.title
+            productPrice.text = productInfo.price + " тг шт"
+            productDescription.text = productInfo.description
+            Glide.with(imageProduct)
+                .load(productInfo.image)
+                .error(R.drawable.ex_category)
+                .into(imageProduct)
         }
     }
 }

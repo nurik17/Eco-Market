@@ -1,6 +1,5 @@
 package com.example.ecomarket.data.local
 
-import androidx.lifecycle.LiveData
 import com.example.ecomarket.data.entity.ProductListItem
 import com.example.ecomarket.domain.BasketRepository
 
@@ -18,6 +17,10 @@ class BasketRepositoryImpl(private val basketProductDao: BasketProductDao) : Bas
 
     override suspend fun deleteProduct(productId: Int) {
         basketProductDao.deleteProduct(productId)
+    }
+
+    override suspend fun deleteAllProducts() {
+        basketProductDao.deleteAllProducts()
     }
 
     override suspend fun getBasketProductById(productId: Int): ProductListItem? {
