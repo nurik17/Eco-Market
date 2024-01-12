@@ -1,6 +1,7 @@
 package com.example.ecomarket.presentation.basket
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -28,7 +29,23 @@ class BasketFragment : BaseFragment<FragmentBasketBinding>(FragmentBasketBinding
         getBasketProducts()
         navigateToProductFragment()
         clearBasket()
+        navigateToMakeOrder()
     }
+
+
+    private fun navigateToMakeOrder() {
+        binding.makeOrderBtn.setSafeOnClickListener {
+            val bundle = Bundle()
+            bundle.putFloat("overallPrice", overallPrice.toFloat())
+
+            if (overallPrice < 300.0) {
+                findNavController().navigate(R.id.action_basketFragment_to_priceWarningFragment)
+            } else {
+                findNavController().navigate(R.id.action_basketFragment_to_makeOrderFragment,bundle)
+            }
+        }
+    }
+
 
     private fun clearBasket(){
         binding.textClear.setSafeOnClickListener {
@@ -81,13 +98,7 @@ class BasketFragment : BaseFragment<FragmentBasketBinding>(FragmentBasketBinding
     }
 
 
-    private fun navigateToMakeOrder(){
-        binding.makeOrderBtn.setSafeOnClickListener {
-            if(overallPrice < 300.0){
-                findNavController().navigate(R.id.)
-            }
-        }
-    }
+
 
     private fun navigateToProductFragment() {
         binding.emptyNavigateStoreBtn.setSafeOnClickListener {

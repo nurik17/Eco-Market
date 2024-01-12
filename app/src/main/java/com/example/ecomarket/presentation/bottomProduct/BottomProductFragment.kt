@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.ecomarket.R
 import com.example.ecomarket.data.entity.ProductListItem
 import com.example.ecomarket.databinding.ProductBottomFragmentBinding
+import com.example.ecomarket.utils.getProductItem
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class BottomProductFragment : BottomSheetDialogFragment() {
@@ -31,11 +32,10 @@ class BottomProductFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val productInfo : ProductListItem = when{
-            Build.VERSION.SDK_INT >= 33 -> arguments?.getParcelable("product")!!
-            else -> @Suppress("DEPRECATION") (arguments?.getParcelable("product")!!)
-        }
+        val productInfo: ProductListItem = arguments.getProductItem("product")
         getInfoAboutProduct(productInfo)
+
+
     }
 
     @SuppressLint("SetTextI18n")

@@ -7,6 +7,7 @@ import com.example.ecomarket.domain.OrderedListItemInteraction
 import com.example.ecomarket.domain.OrderedListItemsUseCase
 import com.example.ecomarket.domain.ProductListUseCaseInteraction
 import com.example.ecomarket.domain.ProductRepository
+import com.example.ecomarket.domain.SendDataToServerUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,4 +28,8 @@ object UseCaseModule {
     @Provides
     fun provideOrderHistoryListUseCase(repo: ProductRepository): OrderedListItemsUseCase =
         OrderedListItemInteraction(repo)
+
+    /*@Provides
+    fun provideSendDataToServerUseCase(repo: ProductRepository): SendDataToServerUseCase =
+        SendDataToServerUseCaseInteraction(repo)*/
 }

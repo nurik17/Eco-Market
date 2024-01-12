@@ -19,6 +19,12 @@
         <action
             android:id="@+id/action_basketFragment_to_productFragment"
             app:destination="@id/productFragment" />
+        <action
+            android:id="@+id/action_basketFragment_to_priceWarningFragment"
+            app:destination="@id/priceWarningFragment" />
+        <action
+            android:id="@+id/action_basketFragment_to_makeOrderFragment"
+            app:destination="@id/makeOrderFragment" />
     </fragment>
     <fragment
         android:id="@+id/informationFragment"
@@ -47,4 +53,16 @@
             android:name="product"
             app:argType="com.example.ecomarket.data.entity.ProductListItem" />
     </dialog>
+    <dialog
+        android:id="@+id/priceWarningFragment"
+        android:name="com.example.ecomarket.presentation.makeOrder.PriceWarningFragment"
+        android:label="PriceWarningFragment" />
+    <fragment
+        android:id="@+id/makeOrderFragment"
+        android:name="com.example.ecomarket.presentation.makeOrder.MakeOrderFragment"
+        android:label="MakeOrderFragment" >
+        <argument
+            android:name="overallPrice"
+            app:argType="float"/>
+    </fragment>
 </navigation>

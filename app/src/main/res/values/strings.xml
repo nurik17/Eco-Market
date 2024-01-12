@@ -32,5 +32,14 @@
     <string name="make_order_btn">Оформить заказ</string>
     <string name="deliver">Доставка</string>
     <string name="overall">Итого</string>
+    <string name="close">Закрыть</string>
+    <string name="text_warning_dialog">Заказ может быть при\nпокупке свыше 300 с</string>
+    <string name="make_order_title_page">Оформление заказа</string>
+    <string name="number_phone">Номер телефона</string>
+    <string name="address">Адрес</string>
+    <string name="landMark">Ориентир</string>
+    <string name="comments">Комментарии</string>
+    <string name="sum_of_order">Сумма заказа</string>
+    <string name="make_order">Заказать доставку</string>
 
 </resources>
