@@ -11,4 +11,7 @@ interface ProductRepository {
 
     suspend fun getHistoryOrderList(): List<OrderedItem>
 
+    suspend fun createOrder(orderRequest: OrderRequest): OrderedItem
+
+
 }

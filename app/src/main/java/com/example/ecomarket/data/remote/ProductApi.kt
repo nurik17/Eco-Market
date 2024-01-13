@@ -3,6 +3,7 @@ package com.example.ecomarket.data.remote
 import com.example.ecomarket.data.entity.CategoryList
 import com.example.ecomarket.data.entity.OrderList
 import com.example.ecomarket.data.entity.OrderRequest
+import com.example.ecomarket.data.entity.OrderedItem
 import com.example.ecomarket.data.entity.ProductList
 import com.example.ecomarket.utils.Constant.X_CSRFToken
 import retrofit2.Call
@@ -26,6 +27,7 @@ interface ProductApi {
     suspend fun getOrderList(): OrderList
 
     @Headers("X-CSRFToken: $X_CSRFToken")
-    @POST("order-create")
-    suspend fun sendDataToServer(@Body request: OrderRequest): Call<OrderList>
+    @POST("order-create/")
+    suspend fun createOrder(@Body requestBody: OrderRequest): Call<OrderedItem>
+
 }

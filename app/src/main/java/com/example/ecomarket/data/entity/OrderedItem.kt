@@ -1,7 +1,10 @@
 package com.example.ecomarket.data.entity
 
+import android.os.Parcelable
 import com.example.ecomarket.presentation.history.HistoryListType
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class OrderedItem(
     val address: String,
     val comments: String,
@@ -13,4 +16,4 @@ data class OrderedItem(
     val reference_point: String,
     val total_amount: String,
     val viewType: HistoryListType?
-)
+) : Parcelable

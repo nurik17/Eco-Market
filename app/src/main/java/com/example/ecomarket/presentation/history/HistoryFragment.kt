@@ -1,6 +1,5 @@
 package com.example.ecomarket.presentation.history
 
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
@@ -41,22 +40,18 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(FragmentHistoryBind
                     when (state) {
                         is Resource.Loading -> {
                             binding.progressBar.visibility = View.VISIBLE
-                            Log.d("HistoryFragment", "loading")
                         }
 
                         is Resource.Success -> {
                             binding.progressBar.visibility = View.GONE
                             val orderHistoryList = state.data ?: emptyList()
                             historyAdapter.submitList(orderHistoryList)
-                            Log.d("HistoryFragment", "$orderHistoryList")
-
                         }
 
                         is Resource.Error -> {
                             binding.progressBar.visibility = View.GONE
                             Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT)
                                 .show()
-                            Log.d("HistoryFragment", "error")
                         }
 
                         else -> Unit

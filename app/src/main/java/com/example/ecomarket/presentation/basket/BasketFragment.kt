@@ -18,11 +18,13 @@ import dagger.hilt.android.AndroidEntryPoint
 class BasketFragment : BaseFragment<FragmentBasketBinding>(FragmentBasketBinding::inflate) {
 
     private val viewModel: BasketViewModel by viewModels()
-    private val basketAdapter = BasketAdapter{ clickableView, item ->
+    private val basketAdapter = BasketAdapter { clickableView, item ->
         onBasketClick(clickableView, item)
     }
 
     private var overallPrice: Double = 0.0
+    private var basketItems: List<ProductListItem> = emptyList()
+
     override fun onBindView() {
         super.onBindView()
         setupRecyclerView()
@@ -41,27 +43,49 @@ class BasketFragment : BaseFragment<FragmentBasketBinding>(FragmentBasketBinding
             if (overallPrice < 300.0) {
                 findNavController().navigate(R.id.action_basketFragment_to_priceWarningFragment)
             } else {
-                findNavController().navigate(R.id.action_basketFragment_to_makeOrderFragment,bundle)
+                bundle.putParcelableArrayList("basketItems", ArrayList(basketItems))
+                findNavController().navigate(
+                    R.id.action_basketFragment_to_makeOrderFragment,
+                    bundle
+                )
             }
         }
     }
 
+    private fun uiBugFix() {
+        binding.apply {
+                basketRv.visibility = View.GONE
+                textSum.visibility = View.GONE
+                textSumDeliver.visibility = View.GONE
+                textSumTotal.visibility = View.GONE
+            }
+        }
 
-    private fun clearBasket(){
-        binding.textClear.setSafeOnClickListener {
-            viewModel.deleteAllProduct()
+    private fun clearBasket() {
+        binding.apply {
+            textClear.setSafeOnClickListener {
+                viewModel.deleteAllProduct()
+                uiBugFix()
+            }
         }
     }
-    private fun onBasketClick(clickableView: BasketViewHolder.ClickableView, item: ProductListItem) {
+
+    private fun onBasketClick(
+        clickableView: BasketViewHolder.ClickableView,
+        item: ProductListItem
+    ) {
         when (clickableView) {
             BasketViewHolder.ClickableView.ONMINUSCLICK -> {
                 viewModel.decrementProductQuantity(item)
             }
+
             BasketViewHolder.ClickableView.ONPLUSCLICK -> {
                 viewModel.incrementProductQuantity(item)
             }
-            BasketViewHolder.ClickableView.ONDELETECLICK->{
+
+            BasketViewHolder.ClickableView.ONDELETECLICK -> {
                 viewModel.deleteProductById(item)
+                uiBugFix()
             }
         }
     }
@@ -77,12 +101,13 @@ class BasketFragment : BaseFragment<FragmentBasketBinding>(FragmentBasketBinding
     }
 
     @SuppressLint("SetTextI18n")
-    private fun getBasketProducts(){
+    private fun getBasketProducts() {
         viewModel.getAllBasketItems().observe(viewLifecycleOwner) { items ->
             if (items.isEmpty()) {
                 showEmptyBasketView()
             } else {
                 hideEmptyBasketView()
+                basketItems = items
                 basketAdapter.submitList(items)
                 updatePrices(items)
             }
@@ -98,8 +123,6 @@ class BasketFragment : BaseFragment<FragmentBasketBinding>(FragmentBasketBinding
     }
 
 
-
-
     private fun navigateToProductFragment() {
         binding.emptyNavigateStoreBtn.setSafeOnClickListener {
             findNavController().navigate(R.id.action_basketFragment_to_productFragment)
@@ -109,20 +132,30 @@ class BasketFragment : BaseFragment<FragmentBasketBinding>(FragmentBasketBinding
     private fun setupRecyclerView() = with(binding.basketRv) {
         layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         adapter = basketAdapter
-        addItemDecoration(OffsetDecoration(bottom = 10))
+        addItemDecoration(OffsetDecoration(bottom = 12))
     }
 
-    private fun showEmptyBasketView(){
+    private fun showEmptyBasketView() {
         binding.apply {
             imageEmpty.visibility = View.VISIBLE
             tvEmpty.visibility = View.VISIBLE
             emptyNavigateStoreBtn.visibility = View.VISIBLE
-
+            textTitleSum.visibility = View.GONE
+            textTitleDeliver.visibility = View.GONE
+            textTitleTotal.visibility = View.GONE
+            makeOrderBtn.visibility = View.GONE
         }
     }
+
     private fun hideEmptyBasketView() {
-        binding.imageEmpty.visibility = View.GONE
-        binding.tvEmpty.visibility = View.GONE
-        binding.emptyNavigateStoreBtn.visibility = View.GONE
+        binding.apply {
+            imageEmpty.visibility = View.GONE
+            tvEmpty.visibility = View.GONE
+            emptyNavigateStoreBtn.visibility = View.GONE
+            textTitleSum.visibility = View.VISIBLE
+            textTitleDeliver.visibility = View.VISIBLE
+            textTitleTotal.visibility = View.VISIBLE
+            makeOrderBtn.visibility = View.VISIBLE
+        }
     }
 }

@@ -17,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/arrow_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -105,7 +106,6 @@
         android:layout_marginBottom="70dp"
         android:fontFamily="@font/tt_norms_pro_700"
         android:text="@string/sum_of_order"
-        android:inputType="textAutoCorrect"
         android:textColor="@color/dark_black"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -122,6 +122,9 @@
         android:text="@string/make_order"
         android:textSize="16sp"
         app:cornerRadius="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sum_of_order"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 
@@ -131,6 +134,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:indeterminate="true"
+        android:visibility="gone"
         android:indeterminateTint="@color/main_green"
         app:layout_constraintVertical_bias="0.5"
         app:layout_constraintTop_toTopOf="parent"

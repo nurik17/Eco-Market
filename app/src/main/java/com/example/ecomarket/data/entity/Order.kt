@@ -1,6 +1,6 @@
 package com.example.ecomarket.data.entity
 
-data class Product(
-    val product: Int,
+data class Order(
+    val product: String,
     val quantity: Int
 )

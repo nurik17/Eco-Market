@@ -64,5 +64,19 @@
         <argument
             android:name="overallPrice"
             app:argType="float"/>
+        <argument
+            android:name="basketItems"
+            app:argType="com.example.ecomarket.data.entity.ProductListItem" />
+        <action
+            android:id="@+id/action_makeOrderFragment_to_successOrderingFragment"
+            app:destination="@id/successOrderingFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/successOrderingFragment"
+        android:name="com.example.ecomarket.presentation.makeOrder.SuccessOrderingFragment"
+        android:label="SuccessOrderingFragment" >
+        <argument
+            android:name="orderNumber"
+            app:argType="com.example.ecomarket.data.entity.OrderedItem" />
+    </dialog>
 </navigation>

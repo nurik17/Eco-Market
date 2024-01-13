@@ -1,6 +1,5 @@
 package com.example.ecomarket.presentation.info
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import com.example.ecomarket.R

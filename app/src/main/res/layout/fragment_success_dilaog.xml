@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:padding="10dp"
     android:orientation="vertical"
     android:background="@drawable/corner_dialog_bg"
@@ -16,14 +17,27 @@
         android:src="@drawable/ic_empty_success"
         android:layout_gravity="center"/>
     <TextView
+        android:id="@+id/orderNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/text_warning_dialog"
+        tools:text="Заказ №343565657\nоформлен"
         android:layout_gravity="center"
         android:gravity="center"
         android:textColor="@color/dark_black"
         android:textSize="24sp"
         android:fontFamily="@font/tt_norms_pro_700"/>
+
+    <TextView
+        android:id="@+id/createdAt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Дата и время 07.07.2023 12:46"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/durk_grey"
+        android:textSize="16sp"
+        android:fontFamily="@font/inter_600"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_to_shop"
