@@ -1,19 +1,33 @@
 package com.example.ecomarket.data.local
 
-import com.example.ecomarket.data.entity.ProductListItem
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import com.example.ecomarket.data.mapper.ProductListMapper
 import com.example.ecomarket.domain.BasketRepository
+import com.example.ecomarket.domain.ProductListItem
 
 class BasketRepositoryImpl(private val basketProductDao: BasketProductDao) : BasketRepository {
 
-    override suspend fun addProduct(product: ProductListItem) {
-        basketProductDao.addProduct(product)
-    }
+    private val mapper = ProductListMapper()
 
     override suspend fun addProducts(products: List<ProductListItem>) {
-        basketProductDao.addProducts(products)
+        basketProductDao.addProducts(mapper.mapListEntityToDbModel(products))
     }
 
-    override fun getAllBasketProduct() = basketProductDao.getAllBasketProducts()
+    override fun getAllBasketProduct(): LiveData<List<ProductListItem>> =
+        MediatorLiveData<List<ProductListItem>>().apply {
+            addSource(basketProductDao.getAllBasketProducts()){
+                value = mapper.mapListDbModelToListEntity(it)
+            }
+    }
+
+
+   /*  override fun getAllBasketProduct(): LiveData<List<ProductListItem>> = Transformations.map(
+            basketProductDao.getAllBasketProduct(){
+                mapper.mapListToDbModel(it)
+            }
+     )*/
+
 
     override suspend fun deleteProduct(productId: Int) {
         basketProductDao.deleteProduct(productId)
@@ -21,10 +35,6 @@ class BasketRepositoryImpl(private val basketProductDao: BasketProductDao) : Bas
 
     override suspend fun deleteAllProducts() {
         basketProductDao.deleteAllProducts()
-    }
-
-    override suspend fun getBasketProductById(productId: Int): ProductListItem? {
-        return basketProductDao.getBasketProductById(productId)
     }
 
     override suspend fun incrementProductQuantity(productId: Int) {
@@ -35,7 +45,10 @@ class BasketRepositoryImpl(private val basketProductDao: BasketProductDao) : Bas
         basketProductDao.decrementProductQuantity(productId)
     }
 
-    override fun basketItemGreaterThanZero() =
-        basketProductDao.getBasketProductListItemGreaterThanZero()
-
+    override fun basketItemGreaterThanZero(): LiveData<List<ProductListItem>> =
+        MediatorLiveData<List<ProductListItem>>().apply {
+            addSource(basketProductDao.getBasketProductListItemGreaterThanZero()){
+                value = mapper.mapListDbModelToListEntity(it)
+            }
+        }
 }

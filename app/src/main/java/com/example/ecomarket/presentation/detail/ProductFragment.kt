@@ -12,7 +12,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.ecomarket.R
-import com.example.ecomarket.data.entity.ProductListItem
+import com.example.ecomarket.domain.ProductListItem
 import com.example.ecomarket.data.entity.Resource
 import com.example.ecomarket.databinding.FragmentProductBinding
 import com.example.ecomarket.utils.BaseFragment

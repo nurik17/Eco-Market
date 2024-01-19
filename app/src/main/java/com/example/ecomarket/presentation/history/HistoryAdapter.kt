@@ -6,12 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import com.example.ecomarket.data.entity.OrderedItem
+import com.example.ecomarket.domain.OrderedItem
 import com.example.ecomarket.databinding.HistoryItemDataBinding
 import com.example.ecomarket.databinding.HistoryItemDateBinding
 
-class HistoryAdapter :
-    ListAdapter<OrderedItem, BaseHistoryViewHolder<*, OrderedItem>>(HistoryDiffCallback()) {
+class HistoryAdapter() : ListAdapter<OrderedItem, BaseHistoryViewHolder<*, OrderedItem>>(HistoryDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseHistoryViewHolder<*, OrderedItem> {
         return if(viewType == HistoryListType.VIEW_ORDER_TYPE.ordinal){
@@ -47,7 +46,9 @@ class OrderViewHolder(override val binding: HistoryItemDataBinding) :
     override fun bindView(item: OrderedItem) {
         binding.apply {
             orderId.text = "Заказ № " + item.order_number.toString()
-            orderPrice.text = item.total_amount
+            val totalAmount = item.total_amount.toDouble()
+            val orderPriceValue = totalAmount + item.delivery_cost
+            orderPrice.text = orderPriceValue.toString()
             orderIdTime.text = takeSplitTime(item)
         }
     }

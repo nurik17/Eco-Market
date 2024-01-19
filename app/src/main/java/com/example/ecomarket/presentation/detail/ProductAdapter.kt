@@ -3,7 +3,7 @@ package com.example.ecomarket.presentation.detail
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.example.ecomarket.data.entity.ProductListItem
+import com.example.ecomarket.domain.ProductListItem
 import com.example.ecomarket.databinding.ProductItemBinding
 
 class ProductAdapter(

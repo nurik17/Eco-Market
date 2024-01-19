@@ -1,13 +1,15 @@
 package com.example.ecomarket.presentation.makeOrder
 
+import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.ecomarket.R
-import com.example.ecomarket.data.entity.OrderRequest
-import com.example.ecomarket.data.entity.OrderedProduct
-import com.example.ecomarket.data.entity.ProductListItem
+import com.example.ecomarket.domain.OrderRequest
+import com.example.ecomarket.domain.OrderedItem
+import com.example.ecomarket.domain.OrderedProduct
+import com.example.ecomarket.domain.ProductListItem
 import com.example.ecomarket.databinding.FragmentMakeOrderBinding
 import com.example.ecomarket.utils.BaseFragment
 import com.example.ecomarket.utils.onTextChanged
@@ -30,35 +32,47 @@ class MakeOrderFragment :
         updateOverallPrice()
         setupBackButton()
 
-        binding.orderBtn.setSafeOnClickListener {
-            makeOrder()
-        }
+        makeOrder()
     }
 
     private fun makeOrder() {
-        val phoneNumber = binding.phoneNumber.text.toString()
-        val address = binding.address.text.toString()
-        val reference = binding.landmark.text.toString()
-        val comments = binding.comments.text.toString()
-        val basketItems = arguments?.getParcelableArrayList<ProductListItem>("basketItems")
-        val products = basketItems?.map { OrderedProduct(product = it.id, quantity = it.quantity) }
-            ?: emptyList()
+        binding.orderBtn.setSafeOnClickListener {
+            val phoneNumber = binding.phoneNumber.text.toString()
+            val address = binding.address.text.toString()
+            val reference = binding.landmark.text.toString()
+            val comments = binding.comments.text.toString()
+            val basketItems = arguments?.getParcelableArrayList<ProductListItem>("basketItems")
+            val products = basketItems?.map { OrderedProduct(product = it.id, quantity = it.quantity) }
+                ?: emptyList()
 
-        val orderRequest = OrderRequest(
-            products = products,
-            phone_number = phoneNumber,
-            address = address,
-            comments = comments,
-            reference_point = reference,
-        )
+            val orderRequest = OrderRequest(
+                products = products,
+                phone_number = phoneNumber,
+                address = address,
+                comments = comments,
+                reference_point = reference,
+            )
 
-        lifecycleScope.launch {
-            try {
-                viewModel.makeOrder(orderRequest)
-            } catch (e: Exception) {
-                Log.e("MakeOrderFragment", e.message.toString())
+            lifecycleScope.launch {
+                try {
+                    viewModel.makeOrder(orderRequest).let { orderedItem ->
+                        navigateToSuccessFragment(orderedItem)
+                    }
+                } catch (e: Exception) {
+                    Log.e("MakeOrderFragment", e.message.toString())
+                }
             }
         }
+    }
+
+    private fun navigateToSuccessFragment(orderedItem: OrderedItem) {
+        val bundle = Bundle().apply {
+            putParcelable("orderedItem", orderedItem)
+        }
+        findNavController().navigate(
+            R.id.action_makeOrderFragment_to_successOrderingFragment,
+            bundle
+        )
     }
 
 

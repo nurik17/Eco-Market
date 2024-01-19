@@ -1,7 +1,7 @@
 package com.example.ecomarket.presentation.home
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.ecomarket.data.entity.CategoryListItem
+import com.example.ecomarket.domain.CategoryListItem
 
 class DiffUtilCallBack : DiffUtil.ItemCallback<CategoryListItem>() {
     override fun areItemsTheSame(oldItem: CategoryListItem, newItem: CategoryListItem): Boolean {

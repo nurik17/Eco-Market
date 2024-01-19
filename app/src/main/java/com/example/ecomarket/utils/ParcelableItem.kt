@@ -2,7 +2,7 @@ package com.example.ecomarket.utils
 
 import android.os.Build
 import android.os.Bundle
-import com.example.ecomarket.data.entity.ProductListItem
+import com.example.ecomarket.domain.ProductListItem
 
 fun Bundle?.getProductItem(key: String): ProductListItem {
     return when {

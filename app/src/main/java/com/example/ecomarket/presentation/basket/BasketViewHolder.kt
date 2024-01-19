@@ -5,9 +5,8 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.ecomarket.R
-import com.example.ecomarket.data.entity.ProductListItem
+import com.example.ecomarket.domain.ProductListItem
 import com.example.ecomarket.databinding.BasketItemBinding
-import com.example.ecomarket.presentation.detail.ProductViewHolder
 
 class BasketViewHolder(private val binding: BasketItemBinding) :
     RecyclerView.ViewHolder(binding.root) {

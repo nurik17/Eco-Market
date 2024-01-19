@@ -1,7 +1,7 @@
 package com.example.ecomarket.presentation.history
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.ecomarket.data.entity.OrderedItem
+import com.example.ecomarket.domain.OrderedItem
 
 class HistoryDiffCallback : DiffUtil.ItemCallback<OrderedItem>() {
     override fun areItemsTheSame(oldItem: OrderedItem, newItem: OrderedItem): Boolean {

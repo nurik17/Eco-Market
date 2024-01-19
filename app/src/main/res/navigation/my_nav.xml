@@ -40,7 +40,7 @@
         android:label="ProductFragment">
         <argument
             android:name="dataCategory"
-            app:argType="com.example.ecomarket.data.entity.CategoryListItem" />
+            app:argType="com.example.ecomarket.domain.CategoryListItem" />
         <action
             android:id="@+id/action_productFragment_to_bottomProductFragment"
             app:destination="@id/bottomProductFragment" />
@@ -51,7 +51,7 @@
         android:label="BottomProductFragment" >
         <argument
             android:name="product"
-            app:argType="com.example.ecomarket.data.entity.ProductListItem" />
+            app:argType="com.example.ecomarket.domain.ProductListItem" />
     </dialog>
     <dialog
         android:id="@+id/priceWarningFragment"
@@ -66,17 +66,20 @@
             app:argType="float"/>
         <argument
             android:name="basketItems"
-            app:argType="com.example.ecomarket.data.entity.ProductListItem" />
+            app:argType="com.example.ecomarket.domain.ProductListItem" />
         <action
             android:id="@+id/action_makeOrderFragment_to_successOrderingFragment"
             app:destination="@id/successOrderingFragment" />
+        <action
+            android:id="@+id/action_makeOrderFragment_to_priceWarningFragment"
+            app:destination="@id/priceWarningFragment" />
     </fragment>
     <dialog
         android:id="@+id/successOrderingFragment"
         android:name="com.example.ecomarket.presentation.makeOrder.SuccessOrderingFragment"
         android:label="SuccessOrderingFragment" >
         <argument
-            android:name="orderNumber"
-            app:argType="com.example.ecomarket.data.entity.OrderedItem" />
+            android:name="orderedItem"
+            app:argType="com.example.ecomarket.domain.OrderedItem" />
     </dialog>
 </navigation>

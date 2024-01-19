@@ -1,8 +1,8 @@
 package com.example.ecomarket.presentation.makeOrder
 
 import androidx.lifecycle.ViewModel
-import com.example.ecomarket.data.entity.OrderRequest
-import com.example.ecomarket.data.entity.OrderedItem
+import com.example.ecomarket.domain.OrderRequest
+import com.example.ecomarket.domain.OrderedItem
 import com.example.ecomarket.domain.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

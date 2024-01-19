@@ -2,7 +2,7 @@ package com.example.ecomarket.presentation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.ecomarket.data.entity.CategoryListItem
+import com.example.ecomarket.domain.CategoryListItem
 import com.example.ecomarket.data.entity.Resource
 import com.example.ecomarket.domain.CategoryListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

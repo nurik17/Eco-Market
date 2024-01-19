@@ -1,14 +1,13 @@
 package com.example.ecomarket.presentation.bottomProduct
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.example.ecomarket.R
-import com.example.ecomarket.data.entity.ProductListItem
+import com.example.ecomarket.domain.ProductListItem
 import com.example.ecomarket.databinding.ProductBottomFragmentBinding
 import com.example.ecomarket.utils.getProductItem
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment

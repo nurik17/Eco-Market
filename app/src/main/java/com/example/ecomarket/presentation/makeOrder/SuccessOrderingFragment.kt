@@ -27,10 +27,12 @@ class SuccessOrderingFragment : DialogFragment() {
             dismiss()
         }
 
-        /*val orderNumber = arguments?.getParcelable<OrderedItem>("orderNumber")
+      /*  val orderNumber = arguments?.getParcelable<OrderedItem>("orderedItem")
 
-        binding.orderNumber.text = orderNumber?.order_number.toString()
-        binding.createdAt.text = orderNumber?.created_at.toString()*/
+        orderNumber?.let {
+            binding.orderNumber.text = it.order_number.toString()
+            binding.createdAt.text = it.created_at.toString()
+        }*/
 
         return binding.root
     }

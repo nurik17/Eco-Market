@@ -2,7 +2,7 @@ package com.example.ecomarket.presentation.history
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.ecomarket.data.entity.OrderedItem
+import com.example.ecomarket.domain.OrderedItem
 import com.example.ecomarket.data.entity.Resource
 import com.example.ecomarket.domain.OrderedListItemsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

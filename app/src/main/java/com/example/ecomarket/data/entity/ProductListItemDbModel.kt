@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "basket_product")
 @Parcelize
-data class ProductListItem(
+data class ProductListItemDbModel(
     @PrimaryKey
     val id: Int,
     val category: Int,

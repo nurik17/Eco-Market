@@ -3,10 +3,9 @@ package com.example.ecomarket.presentation.basket
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.example.ecomarket.data.entity.ProductListItem
+import com.example.ecomarket.domain.ProductListItem
 import com.example.ecomarket.databinding.BasketItemBinding
 import com.example.ecomarket.presentation.detail.ProductDiffUtilCallBack
-import com.example.ecomarket.presentation.detail.ProductViewHolder
 
 class BasketAdapter(
     private val onClick:(clickableView: BasketViewHolder.ClickableView, item: ProductListItem) -> Unit,

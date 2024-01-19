@@ -7,7 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ecomarket.R
-import com.example.ecomarket.data.entity.ProductListItem
+import com.example.ecomarket.domain.ProductListItem
 import com.example.ecomarket.databinding.FragmentBasketBinding
 import com.example.ecomarket.utils.BaseFragment
 import com.example.ecomarket.utils.OffsetDecoration
@@ -85,10 +85,10 @@ class BasketFragment : BaseFragment<FragmentBasketBinding>(FragmentBasketBinding
 
             BasketViewHolder.ClickableView.ONDELETECLICK -> {
                 viewModel.deleteProductById(item)
-                uiBugFix()
             }
         }
     }
+
 
     @SuppressLint("SetTextI18n")
     private fun updatePrices(items: List<ProductListItem>) {

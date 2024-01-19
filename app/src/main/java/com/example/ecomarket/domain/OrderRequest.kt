@@ -1,4 +1,4 @@
-package com.example.ecomarket.data.entity
+package com.example.ecomarket.domain
 
 data class OrderRequest(
     val address: String,

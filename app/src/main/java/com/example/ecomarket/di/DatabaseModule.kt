@@ -15,7 +15,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 class DatabaseModule {
-
     @Singleton
     @Provides
     fun getDatabase(@ApplicationContext context: Context): BasketProductDatabase{

@@ -1,4 +1,4 @@
-package com.example.ecomarket.data.entity
+package com.example.ecomarket.domain
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

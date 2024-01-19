@@ -8,7 +8,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.ecomarket.R
-import com.example.ecomarket.data.entity.CategoryListItem
 import com.example.ecomarket.data.entity.Resource
 import com.example.ecomarket.databinding.FragmentHomeBinding
 import com.example.ecomarket.utils.BaseFragment

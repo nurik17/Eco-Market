@@ -1,10 +1,9 @@
 package com.example.ecomarket.presentation.detail
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.ecomarket.data.entity.ProductListItem
+import com.example.ecomarket.domain.ProductListItem
 import com.example.ecomarket.data.entity.Resource
 import com.example.ecomarket.domain.BasketRepository
 import com.example.ecomarket.domain.GetProductListUseCase
@@ -56,7 +55,6 @@ class ProductViewModel @Inject constructor(
     fun incrementProductQuantity(product: ProductListItem) {
         viewModelScope.launch {
             basketRepo.incrementProductQuantity(product.id)
-            Log.d("ProductViewModel", "incrementProductQuantity: ${product.quantity}")
         }
     }
 
